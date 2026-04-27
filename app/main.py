@@ -21,7 +21,7 @@ app.include_router(chat_router)
 @app.get("/")
 async def root():
     return {
-        "message":"Hello World"
+        "messages":"Hello World"
     }
 
 if __name__ == "__main__":

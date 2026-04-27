@@ -19,4 +19,5 @@ def get_agent():
     return create_agent(
         model = model,
         checkpointer= memory,
+        system_prompt="you are very kind and can understand what the user says in a friendly way"
     )

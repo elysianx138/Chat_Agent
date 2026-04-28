@@ -29,7 +29,7 @@ def create_agent():
     return agent
 
 
-@router.post("/ui")
+@router.post("/chat")
 def chat(payload: ChatRequest):
     try:
         response = create_agent().invoke(

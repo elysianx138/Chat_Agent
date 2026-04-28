@@ -1,6 +1,18 @@
-﻿from fastapi import APIRouter, HTTPException
+﻿'''
+=============
+聊天由路:
+=============
+功能:
+ - def ui():进行用户询问问题的答复
+ - create_agent():创建agent实例,存入缓存中
+=============
+更新:2026.4.27
+'''
+
+from fastapi import APIRouter, HTTPException
 from langchain_core.messages import HumanMessage
 from pydantic import BaseModel, Field
+from torch.fx.experimental.symbolic_shapes import lru_cache
 
 from util.get_model import get_agent
 
@@ -11,14 +23,16 @@ class ChatRequest(BaseModel):
     query: str = Field(min_length=1, description="require that the chat is not NULL")
     session_id: str = "default"
 
+@lru_cache(maxsize=1)
+def create_agent():
+    agent = get_agent()
+    return agent
 
-agent = get_agent()
 
-
-@router.post("/chat")
+@router.post("/ui")
 def chat(payload: ChatRequest):
     try:
-        response = agent.invoke(
+        response = create_agent().invoke(
             {
                 "messages": [
                     HumanMessage(content=payload.query),

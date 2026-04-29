@@ -4,7 +4,9 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from api.upload_routers import router as upload_router
 from api.chat_routers import router as chat_router
+from model.config import Settings as settings
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
@@ -27,11 +29,12 @@ app.add_middleware(
 )
 
 app.include_router(chat_router)
+app.include_router(upload_router)
 
 @app.get("/")
 async def root():
     return {
-        "messages":"Hi!That's working!Go to http://127.0.0.1:3000/",
+        "messages":f"Hi!{settings.APP_NAME//settings.APP_VERSION}Go to http://127.0.0.1:3000/!",
         "code":200
     }
 

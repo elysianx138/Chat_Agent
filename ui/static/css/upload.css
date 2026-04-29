@@ -1,0 +1,26 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.header h1 { font-size: 1.5rem; color: #333; }
+.header nav { display: flex; gap: 15px; }
+.header a { color: #007bff; text-decoration: none; }
+.header a:hover { text-decoration: underline; }
+.upload-section { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+.upload-box { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
+#file-input { padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+#upload-btn { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
+#upload-btn:hover { background: #0056b3; }
+.hint { color: #999; font-size: 0.9rem; }
+#message { margin-top: 15px; font-size: 0.9rem; }
+#message.success { color: #28a745; }
+#message.error { color: #dc3545; }
+.file-list-section { margin-top: 30px; }
+.file-list-section h2 { font-size: 1.2rem; color: #333; margin-bottom: 15px; }
+#refresh-btn { padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 15px; }
+#refresh-btn:hover { background: #5a6268; }
+#file-list { list-style: none; }
+#file-list li { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: white; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 1px 5px rgba(0,0,0,0.05); }
+.file-name { color: #333; }
+.delete-btn { padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.delete-btn:hover { background: #c82333; }
+.empty { color: #999; text-align: center; padding: 20px; }

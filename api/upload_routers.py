@@ -1,8 +1,9 @@
 import shutil
+from datetime import datetime
+
 from pathlib import Path
 from fastapi import APIRouter, File, HTTPException, UploadFile
-
-from ingest.document_registry import list_documents
+from ingest.document_registry import list_documents, upsert_document
 from model.config import Settings as settings
 
 
@@ -19,13 +20,21 @@ async def upload(file: UploadFile = File(...)):
         )
 
     settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    target_path = settings.UPLOAD_DIR / (file.filename or "unnamed")
+    target_path = settings.UPLOAD_DIR / (file.filename or "")
 
     with open(target_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
 
-# @router.get("/list")
-# async def list_file():
-#     return {
-#         "documents":list_documents()
-#     }
+        upsert_document({
+            "filename": file.filename,
+            "file_path":str(target_path),
+            "updated_at":datetime.now().isoformat(timespec="seconds"),
+        })
+
+
+@router.get("/list")
+async def list_file():
+    documents = list_documents()
+    return {
+        "documents":documents,
+    }

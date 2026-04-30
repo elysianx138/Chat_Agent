@@ -14,8 +14,11 @@ class Settings:
     # === 文件管理模块 ===
     # 允许上传文件
     # 上传文件保存路径
+    # json文件保存
     ALLOWED_FILE_EXTENSIONS = [".md"]
     UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR","uploads"))
+    DATA_PATH = Path(os.getenv("DATA_PATH","db"))
+    DOCUMENTS_REGISTRY_PATH = DATA_PATH / "documents.json"
 
 
 

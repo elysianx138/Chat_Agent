@@ -31,6 +31,9 @@ app.add_middleware(
 app.include_router(chat_router)
 app.include_router(upload_router)
 
+# cd C:\Users\shiko\Desktop\RAG-CHAT-learn\ui
+# python -m http.server 3000
+
 @app.get("/")
 async def root():
     return {

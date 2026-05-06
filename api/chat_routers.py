@@ -12,7 +12,7 @@
 from fastapi import APIRouter, HTTPException
 from langchain_core.messages import HumanMessage
 from pydantic import BaseModel, Field
-from torch.fx.experimental.symbolic_shapes import lru_cache
+from functools import lru_cache
 
 from util.get_model import get_agent
 
@@ -30,9 +30,9 @@ def create_agent():
 
 
 @router.post("/chat")
-def chat(payload: ChatRequest):
+async def chat(payload: ChatRequest):
     try:
-        response = create_agent().invoke(
+        response =await create_agent().ainvoke(
             {
                 "messages": [
                     HumanMessage(content=payload.query),

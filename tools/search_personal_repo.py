@@ -1,7 +1,5 @@
 from langchain_core.tools import tool
-from dotenv import load_dotenv
 from tools import get_knowledge_base
-load_dotenv()
 
 @tool
 def search_personal_repo(query:str) -> str:

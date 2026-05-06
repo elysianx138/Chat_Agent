@@ -1,17 +1,19 @@
 import sys
 import uvicorn
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.upload_routers import router as upload_router
 from api.chat_routers import router as chat_router
-from model.config import Settings as settings
+from MCP.search_mcp import search_website
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0,str(ROOT_DIR))
 
+load_dotenv()
 @asynccontextmanager
 async def lifespan(_:FastAPI):
     print("""////////////////////////////////////////////////////////////////////
@@ -36,6 +38,9 @@ async def lifespan(_:FastAPI):
 //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //
 //             佛祖保佑       永不宕机      永无BUG               //
 ////////////////////////////////////////////////////////////////////""")
+
+
+    await search_website()
     yield
     print("√closed successfully")
 

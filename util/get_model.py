@@ -1,12 +1,10 @@
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
-from tools.search_personal_repo import search_personal_repo
-from dotenv import load_dotenv
 import os
-
 from langgraph.checkpoint.memory import MemorySaver
+from tools.search_personal_repo import search_personal_repo
+from MCP.mcp_stores import mcp_tools
 
-load_dotenv()
 
 def get_model():
     return ChatOpenAI(
@@ -22,6 +20,6 @@ def get_agent():
     return create_agent(
         model = model,
         checkpointer= memory,
-        tools=[search_personal_repo],
-        system_prompt="you are very kind and can understand what the user says in a friendly way"
+        tools=[search_personal_repo] + mcp_tools,
+        system_prompt="you are very kind and can understand what the user says in a friendly way."
     )

@@ -1,9 +1,5 @@
 import os
-from dotenv import load_dotenv
 from langchain_community.embeddings import DashScopeEmbeddings
-
-
-load_dotenv()
 
 
 def get_embeddings():

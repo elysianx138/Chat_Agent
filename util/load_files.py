@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from langchain_community.document_loaders import DirectoryLoader
 
-DATA_DIR = Path(os.getenv("UPLOAD_DIR","uploads"))
+DATA_DIR = Path(os.getenv("UPLOAD_DIR","uploadsads"))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 """

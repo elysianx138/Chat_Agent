@@ -1,6 +1,12 @@
 # 🤖Chat_Agent
 >This is a great repo for beginners who are trying to practice LangChain and the repo is also my first project after learning LangChain
 
+<img width="100px" src="https://github.githubassets.com/images/mona-loading-default.gif" align="center" alt="Logo" />
+
+![](https://img.shields.io/badge/Github-181717?style=plastic&logo=github&logoColor=white) ![](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=ffffff) ![](https://img.shields.io/badge/Windows-11-2376bc?style=plastic&logo=microsoft&logoColor=ffffff) ![](https://img.shields.io/github/license/bitcookies/winrar-keygen.svg) 
+
+
+
 # 😊What's the project
 An AI knowledge base Q&A assistant built on RAG and tool calling,supporting local document retrieval and MCP service web search.User can ask question in natural language;the system intelligently matches data sources to generate accurate answers,and features multi-turn diaogue context memory capability.
 

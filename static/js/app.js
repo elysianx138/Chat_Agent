@@ -1,4 +1,7 @@
-const API_URL = 'http://127.0.0.1:8000/chat';
+﻿const API_URL = '/chat';
+const UPLOAD_URL = '/upload';
+const LIST_URL = '/list';
+const DELETE_URL = '/delete';
 let sessionId = 'default';
 
 const messagesContainer = document.getElementById('messages');
@@ -53,7 +56,7 @@ async function sendMessage() {
 
     userInput.value = '';
     userInput.style.height = 'auto';
-    
+
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message user';
     messageDiv.innerHTML = `
@@ -61,12 +64,12 @@ async function sendMessage() {
         <div class="bubble">${escapeHtml(content)}</div>
     `;
     messagesContainer.appendChild(messageDiv);
-    
+
     sendBtn.disabled = true;
     showTyping();
-    
+
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(window.location.origin + API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,9 +80,24 @@ async function sendMessage() {
             }),
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data = null;
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch (parseErr) {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${raw.slice(0, 200)}`);
+            }
+            throw new Error(`Invalid JSON response: ${raw.slice(0, 200)}`);
+        }
+
+        if (!response.ok) {
+            const detail = data?.detail || data?.message || `HTTP ${response.status}`;
+            throw new Error(detail);
+        }
+
         hideTyping();
-        
+
         if (data.answer) {
             const aiMessageDiv = document.createElement('div');
             aiMessageDiv.className = 'message ai';
@@ -94,24 +112,25 @@ async function sendMessage() {
             errorDiv.className = 'message ai';
             errorDiv.innerHTML = `
                 <div class="avatar ai">AI</div>
-                <div class="bubble">抱歉，发生了错误</div>
+                <div class="bubble">No answer returned by backend.</div>
             `;
             messagesContainer.appendChild(errorDiv);
         }
-        
+
         sessionId = data.session_id || sessionId;
     } catch (error) {
         hideTyping();
         const errorMsgDiv = document.createElement('div');
         errorMsgDiv.className = 'message ai';
+        const safeMsg = escapeHtml(error?.message || 'unknown error');
         errorMsgDiv.innerHTML = `
             <div class="avatar ai">AI</div>
-            <div class="bubble">连接失败，请确保后端服务正在运行</div>
+            <div class="bubble">请求失败：${safeMsg}</div>
         `;
         messagesContainer.appendChild(errorMsgDiv);
         console.error('Error:', error);
     }
-    
+
     sendBtn.disabled = false;
     userInput.focus();
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -141,13 +160,13 @@ async function uploadFile(event) {
     const uploadBtn = document.querySelector('.upload-btn');
     const uploadText = document.getElementById('uploadText');
     uploadBtn.disabled = true;
-    uploadText.innerHTML = '<span class="loading-spinner"></span> 上传中...';
+    uploadText.innerHTML = '<span class="loading-spinner"></span> 涓婁紶涓?..';
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/upload', {
+        const response = await fetch(window.location.origin + UPLOAD_URL, {
             method: 'POST',
             body: formData
         });
@@ -155,20 +174,20 @@ async function uploadFile(event) {
         if (response.ok) {
             loadDocuments();
         } else {
-            alert('上传失败');
+            alert('涓婁紶澶辫触');
         }
     } catch (error) {
-        alert('上传失败: ' + error.message);
+        alert('涓婁紶澶辫触: ' + error.message);
     }
 
     uploadBtn.disabled = false;
-    uploadText.textContent = '上传 Markdown';
+    uploadText.textContent = '涓婁紶 Markdown';
     event.target.value = '';
 }
 
 async function loadDocuments() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/list');
+        const response = await fetch(window.location.origin + LIST_URL);
         const data = await response.json();
         renderDocuments(data.documents || []);
     } catch (error) {
@@ -185,7 +204,7 @@ function renderDocuments(documents) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                <p>暂无文档，请上传 Markdown 文件</p>
+                <p>鏆傛棤鏂囨。锛岃涓婁紶 Markdown 鏂囦欢</p>
             </div>
         `;
         return;
@@ -199,16 +218,16 @@ function renderDocuments(documents) {
                 </svg>
                 ${doc.filename}
             </div>
-            <div class="kb-card-time">更新时间: ${formatDate(doc.updated_at)}</div>
+            <div class="kb-card-time">鏇存柊鏃堕棿: ${formatDate(doc.updated_at)}</div>
             <div class="kb-card-actions">
-                <button class="kb-action-btn delete" onclick="deleteDocument('${doc.filename}')">删除</button>
+                <button class="kb-action-btn delete" onclick="deleteDocument('${doc.filename}')">鍒犻櫎</button>
             </div>
         </div>
     `).join('');
 }
 
 function formatDate(dateStr) {
-    if (!dateStr) return '未知';
+    if (!dateStr) return '鏈煡';
     const date = new Date(dateStr);
     return date.toLocaleString('zh-CN', {
         year: 'numeric',
@@ -220,20 +239,20 @@ function formatDate(dateStr) {
 }
 
 async function deleteDocument(filename) {
-    if (!confirm(`确定要删除 "${filename}" 吗？`)) return;
+    if (!confirm(`纭畾瑕佸垹闄?"${filename}" 鍚楋紵`)) return;
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/delete/${encodeURIComponent(filename)}`, {
+        const response = await fetch(`${window.location.origin}${DELETE_URL}/${encodeURIComponent(filename)}`, {
             method: 'DELETE'
         });
 
         if (response.ok) {
             loadDocuments();
         } else {
-            alert('删除失败');
+            alert('鍒犻櫎澶辫触');
         }
     } catch (error) {
-        alert('删除失败: ' + error.message);
+        alert('鍒犻櫎澶辫触: ' + error.message);
     }
 }
 

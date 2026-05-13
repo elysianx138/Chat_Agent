@@ -7,10 +7,14 @@ from MCP.mcp_stores import mcp_tools
 
 
 def get_model():
+    api_key = os.getenv("API_KEY")
+    if not api_key:
+        raise ValueError("Missing API_KEY environment variable.")
+
     return ChatOpenAI(
         model = os.getenv("AI_MODEL","qwen-plus"),
         base_url= os.getenv("BASE_URL","https://dashscope.aliyuncs.com/compatible-mode/v1"),
-        api_key= os.getenv("API_KEY"),
+        api_key= api_key,
         temperature=0.7,
     )
 

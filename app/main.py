@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from api.upload_routers import router as upload_router
 from api.chat_routers import router as chat_router
 from MCP.search_mcp import search_website
@@ -51,12 +49,15 @@ app.add_middleware(
 app.include_router(chat_router)
 app.include_router(upload_router)
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-app.mount("/static", StaticFiles(directory=ROOT_DIR / "static"), name="static")
+# cd C:\Users\shiko\Desktop\RAG-CHAT-learn\ui
+# python -m http.server 3000
 
 @app.get("/")
 async def root():
-    return FileResponse(ROOT_DIR / "ui" / "index.html")
+    return {
+        "messages":"Hi!Contact successfully!Go to http://127.0.0.1:3000/!",
+        "code":200
+    }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

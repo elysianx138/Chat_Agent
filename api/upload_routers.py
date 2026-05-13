@@ -1,12 +1,10 @@
 import shutil
 from datetime import datetime
 
-import os
 from pathlib import Path
 from fastapi import APIRouter, File, HTTPException, UploadFile
-from ingest.document_registry import list_documents, upsert_document, remove_document
+from ingest.document_registry import list_documents, upsert_document
 from model.config import Settings as settings
-from tools import reload_knowledge_base
 
 
 router = APIRouter()
@@ -33,9 +31,6 @@ async def upload(file: UploadFile = File(...)):
             "updated_at":datetime.now().isoformat(timespec="seconds"),
         })
 
-    reload_knowledge_base()
-    return {"message": "Upload successful", "filename": file.filename}
-
 
 @router.get("/list")
 async def list_file():
@@ -43,21 +38,3 @@ async def list_file():
     return {
         "documents":documents,
     }
-
-@router.delete("/delete/{filename}")
-async def delete_file(filename: str):
-    document = get_document(filename)
-    if not document:
-        raise HTTPException(status_code=404, detail="File not found")
-    
-    file_path = Path(document["file_path"])
-    if file_path.exists():
-        file_path.unlink()
-    
-    remove_document(filename)
-    reload_knowledge_base()
-    return {"message": "Deleted successfully", "filename": filename}
-
-def get_document(filename: str):
-    from ingest.document_registry import get_document as get_doc
-    return get_doc(filename)

@@ -32,6 +32,9 @@ CHAT_AGENT
 - More structured project structure. 
 - Not only API calls,but also tools encapsulation and MCP services. 
 
+# 🔭Quick start
+**Visit**:https://chatagent-production-3489.up.railway.app/
+
 # ⚙️How to run
 ## Step 1
 **Intsall requirement.txt**
@@ -89,8 +92,10 @@ Input http://127.0.0.1:8000/docs#/default/chat_chat_post
 # 😄Q & A
 **Q:Why is there nothing afer opening the correct address?**
 A:Because we don't have a front-end,if you want to try,need to enter:http://127.0.0.1:8000/docs#/default/chat_chat_post
+
 **Q:Why do I keep reporting errors when I use it?**
 A:Try to check your API(AI model,embedding model,etc.) or check your ```uploads```file whether the content of your file uses Mkdown?
+
 **Q:There is still a problem**
 A:[Welcome to submit Issues or contact me](#have-any-questions)
 

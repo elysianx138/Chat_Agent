@@ -19,5 +19,13 @@ class Settings:
     DOCUMENTS_REGISTRY_PATH = DATA_PATH / "documents.json"
 
 
+    # Logging configuration
+    def logging_config(self):
+        import logging
+        from logging import basicConfig
+        logging = baseConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logger = logging.getLogger(__name__)
+
+
 
 

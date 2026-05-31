@@ -1,41 +1,65 @@
-# Python
+# ====== Python ======
 __pycache__/
 *.pyc
 *.pyo
 *.egg-info/
+*.egg
+dist/
+build/
 
-# Git
+# ====== Tests (not needed in production) ======
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ====== Git ======
 .git/
 .gitignore
+.gitattributes
 
-# IDE
+# ====== IDE ======
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
 
-# Virtual Environment
+# ====== Virtual Environment ======
 .venv/
 venv/
+env/
 
-# Environment variables (secrets!)
+# ====== Environment variables (secrets!) ======
 .env
-.env.example
+.env.*
+!.env.example
 
-# Documentation
-README.md
+# ====== CI/CD ======
+.github/
+docker-compose.yml
+
+# ====== Docs & Media ======
+*.md
 docs/
 img/
 LICENSE
 
-# Railway
-railway.toml
+# ====== Logs & Temp ======
+*.log
+*.tmp
 
-# User uploads (should be mounted as volume)
-uploads/
-
-# OS files
+# ====== OS ======
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Docker
+# ====== Docker ======
 .dockerignore
-Dockerfile
+Dockerfile*
+
+# ====== User uploads (mounted as volume) ======
+uploads/
+
+# ====== Deployment ======
+railway.toml

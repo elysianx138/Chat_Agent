@@ -29,7 +29,11 @@ jobs:
           echo "🔒 Successfully logged in to GitHub Container Registry."
 
       - name: Push image
+        env:
+          REPO_LC: ${{ github.repository }}
         run: |
-          docker tag docker_test:latest ghcr.io/${{ github.repository }} && docker push ghcr.io/${{ github.repository }}
+          REPO_LC=$(echo "$REPO_LC" | tr '[:upper:]' '[:lower:]')
+          docker tag docker_test:latest ghcr.io/$REPO_LC:latest
+          docker push ghcr.io/$REPO_LC:latest
           echo "🚀 Docker image pushed to GitHub Container Registry successfully."
 

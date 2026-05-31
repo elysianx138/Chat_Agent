@@ -29,5 +29,3 @@ chromadb>=0.4.0
 numpy>=1.20.0
 PyYAML>=6.0
 
-# logging
-logging>=0.4.9.6

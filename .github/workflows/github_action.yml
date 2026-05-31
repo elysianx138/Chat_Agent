@@ -20,7 +20,7 @@ jobs:
       
       - name: Run tests inside container
         run: |
-          docker run docker_test:latest sh -c "pip install pytest && python -m pytest tests/"
+          docker run docker_test:latest sh -c "pip install --no-cache-dir pytest && python -m pytest tests/"
           echo "✅ All tests passed successfully."
       
       - name: Log in to GitHub Container Registry

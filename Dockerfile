@@ -11,7 +11,7 @@ WORKDIR /app
 # non-root user setup
 COPY --from=builder /root/.local /usr/local
 ENV PATH=/usr/local/bin:$PATH
-RUN useradd appuser
+RUN useradd --create-home appuser
 COPY . .
 RUN chown -R appuser:appuser /app
 USER appuser

@@ -31,7 +31,6 @@ async def lifespan(_:FastAPI):
         logger.info("Dependencies initialized")
     except Exception as e:
         logger.critical(f"Dependencies not initialized: {e}")
-        raise
 
     yield
     logger.info('='*60)

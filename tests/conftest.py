@@ -2,7 +2,7 @@ import pytest
 import os
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, AsyncMock
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
@@ -11,6 +11,7 @@ os.environ["API_KEY"] = "test-key"
 os.environ["AI_MODEL"] = "test-model"
 os.environ["BASE_URL"] = "https://test.com/v1"
 os.environ["AI_EMBEDDING_MODEL"] = "test-embedding"
+os.environ["SEARCH_API"] = "test-search-api"
 os.environ["UPLOAD_DIR"] = str(ROOT_DIR / "tests" / "test_uploads")
 os.environ["DATA_PATH"] = str(ROOT_DIR / "tests" / "test_data")
 
@@ -30,7 +31,8 @@ def clean_test_dirs():
 
 @pytest.fixture(autouse=True)
 def mock_heavy_deps():
-    with patch("api.upload_routers.reload_knowledge_base"):
+    with patch("api.upload_routers.reload_knowledge_base"), \
+         patch("app.main.search_website", new_callable=AsyncMock):
         yield
 
 

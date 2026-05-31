@@ -4,4 +4,9 @@ services:
     ports:
       - "8000:8000"
     env_file: .env
+    volumes:
+      - ./uploads:/data/uploads
     restart: unless-stopped
+
+volumes:
+  uploads:

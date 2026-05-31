@@ -3,7 +3,7 @@
 
 <img width="100px" src="https://github.githubassets.com/images/mona-loading-default.gif" align="center" alt="Logo" />
 
-![](https://img.shields.io/badge/Github-181717?style=plastic&logo=github&logoColor=white) ![](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=ffffff) ![](https://img.shields.io/badge/Windows-11-2376bc?style=plastic&logo=microsoft&logoColor=ffffff) ![](https://img.shields.io/github/license/bitcookies/winrar-keygen.svg) 
+![](https://img.shields.io/badge/Github-181717?style=plastic&logo=github&logoColor=white) ![](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=ffffff) ![](https://img.shields.io/badge/Windows-11-2376bc?style=plastic&logo=microsoft&logoColor=ffffff) ![](https://img.shields.io/badge/Docker-2496ED?style=plastic&logo=docker&logoColor=white) ![](https://img.shields.io/github/actions/workflow/status/elysianx138/Chat_Agent/github_action.yml?style=plastic) ![](https://img.shields.io/github/license/bitcookies/winrar-keygen.svg) 
 
 
 
@@ -19,12 +19,17 @@ An AI knowledge base Q&A assistant built on RAG and tool calling,supporting loca
 ```
 CHAT_AGENT
 |
-|---api/ /chat&upload Router
-|---model/ AI agent model
-|---app/ /back_end
-|---util tool function
-|---MCP/ integrated MCP service
-|---tools/ Tool packaging
+|---api/          chat & upload Router
+|---model/        AI agent model
+|---app/          back_end
+|---util/         tool function
+|---MCP/          integrated MCP service
+|---tools/        Tool packaging
+|---tests/        pytest test suite
+|---.github/      GitHub Actions CI/CD
+|---Dockerfile            Docker image build
+|---docker-compose.yml    one-command orchestration
+|---.dockerignore         Docker ignore rules
 ```
 
 # 🤔What I learned
@@ -36,10 +41,29 @@ CHAT_AGENT
 **Visit**:https://chatagent-production-3489.up.railway.app/
 
 # ⚙️How to run
-## Step 1
-**Intsall requirement.txt**
+
+## 🐳 Run with Docker (Recommended)
+```bash
+# Pull from GitHub Container Registry
+docker pull ghcr.io/elysianx138/chat_agent:latest
+
+# Run
+docker run -p 8000:8000 --env-file .env ghcr.io/elysianx138/chat_agent:latest
 ```
-pip install requirement.txt
+
+## 🐳 Run with Docker Compose
+```bash
+docker compose up -d
+```
+
+---
+
+## 🖥️ Run Locally (without Docker)
+
+## Step 1
+**Install requirements.txt**
+```
+pip install -r requirements.txt
 ```
 ---
 
